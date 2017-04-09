@@ -1,5 +1,5 @@
 {
-  "name": "@buggyorg/rewrite-toolchain",
+  "name": "@buggyorg/thunk-if",
   "version": "0.2.7",
   "description": "A toolchain that exposes a collection of rewrite rules.",
   "main": "lib/api.js",
