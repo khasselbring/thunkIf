@@ -17,4 +17,3 @@ cliExt.input(process.argv[2])
   console.error(err.stack || err)
   process.exitCode = 1
 })
-

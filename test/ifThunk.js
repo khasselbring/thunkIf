@@ -10,10 +10,26 @@ const ifNode = (data) =>
   Object.assign({
     componentId: 'if',
     ports: [
-      {port: 'cond', kind: 'input', type: 'Bool'},
-      {port: 'a', kind: 'input', type: 'generic'},
-      {port: 'b', kind: 'input', type: 'generic'},
-      {port: 'out', kind: 'output', type: 'generic'}
+      {
+        kind: 'input',
+        type: 'Boolean',
+        port: 'condition'
+      },
+      {
+        kind: 'input',
+        type: 'generic',
+        port: 'inTrue'
+      },
+      {
+        kind: 'input',
+        type: 'generic',
+        port: 'inFalse'
+      },
+      {
+        kind: 'output',
+        type: 'generic',
+        port: 'choice'
+      }
     ],
     atomic: true
   }, data)
@@ -24,15 +40,16 @@ describe('» If to ThunkIf', () => {
       Graph.addNode(ifNode({name: 'if'})),
       Graph.addNode({name: 'a', ports: [{port: 'out', kind: 'output', type: 'Number'}]}),
       Graph.addNode({name: 'b', ports: [{port: 'out', kind: 'output', type: 'Number'}]}),
-      Graph.addEdge({from: 'a@out', to: 'if@a'}),
-      Graph.addEdge({from: 'b@out', to: 'if@b'}),
-      Graph.addEdge({from: '@cond', to: 'if@cond'}),
-      Graph.addEdge({from: 'if@out', to: '@out'})
+      Graph.addEdge({from: 'a@out', to: 'if@inTrue'}),
+      Graph.addEdge({from: 'b@out', to: 'if@inFalse'}),
+      Graph.addEdge({from: '@cond', to: 'if@condition'}),
+      Graph.addEdge({from: 'if@choice', to: '@out'})
     )(Graph.compound({ports: [{port: 'cond', kind: 'input', type: 'Bool'}, {port: 'out', kind: 'output', type: 'generic'}]}))
 
     const rewGraph = thunkIf(graph)
     expect(Graph.hasNode('/ifThunk', rewGraph)).to.be.true
     expect(Graph.hasNode('/if', rewGraph)).to.not.be.true
     expect(Graph.nodesBy('/functional/lambda', rewGraph)).to.have.length(2)
+    expect(Graph.edges(rewGraph)).to.have.length(4)
   })
 })
