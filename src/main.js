@@ -39,9 +39,10 @@ export default (graph) => Rewrite.rewrite([Rewrite.applyNode(
     const lca = Algorithm.lowestCommonAncestors([Node.port('inTrue', node), Node.port('inFalse', node)], graph)
     const subsetA = Algorithm.predecessorsUpTo(Node.port('inTrue', node), lca, graph)
     const subsetB = Algorithm.predecessorsUpTo(Node.port('inFalse', node), lca, graph)
+    const parent = Graph.parent(node, graph)
     return Graph.flow(
       Graph.Let([
-        Graph.addNode(ifThunk(node)),
+        Graph.addNodeIn(parent, ifThunk(node)),
         GraphRew.replaceByThunk(subsetA),
         GraphRew.replaceByThunk(subsetB)
       ], ([ifThunk, lambdaA, lambdaB], graph) => {

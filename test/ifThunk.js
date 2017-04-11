@@ -54,12 +54,13 @@ describe('» If to ThunkIf', () => {
     expect(Graph.edges(rewGraph)).to.have.length(4)
   })
 
-  it.only('can handle recursive nodes', () => {
+  it('can handle recursive nodes', function () {
+    this.timeout(10000)
     const graph = Graph.fromJSON(JSON.parse(fs.readFileSync('test/fixtures/fac.json', 'utf8')))
     const rewGraph = thunkIf(graph)
     expect(graph).to.be.ok
     expect(Graph.hasNode('/ifThunk', rewGraph)).to.be.true
     expect(Graph.hasNode('/if', rewGraph)).to.not.be.true
-    expect(Graph.nodesBy('/functional/lambda', rewGraph)).to.have.length(2)
+    expect(Graph.nodesDeepBy((n) => n.componentId === 'functional/lambda', rewGraph)).to.have.length(2)
   })
 })
