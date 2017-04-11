@@ -3,6 +3,7 @@
 import * as Graph from '@buggyorg/graphtools'
 import thunkIf from '../src/main'
 import chai from 'chai'
+import fs from 'fs'
 
 const expect = chai.expect
 
@@ -51,5 +52,14 @@ describe('» If to ThunkIf', () => {
     expect(Graph.hasNode('/if', rewGraph)).to.not.be.true
     expect(Graph.nodesBy('/functional/lambda', rewGraph)).to.have.length(2)
     expect(Graph.edges(rewGraph)).to.have.length(4)
+  })
+
+  it.only('can handle recursive nodes', () => {
+    const graph = Graph.fromJSON(JSON.parse(fs.readFileSync('test/fixtures/fac.json', 'utf8')))
+    const rewGraph = thunkIf(graph)
+    expect(graph).to.be.ok
+    expect(Graph.hasNode('/ifThunk', rewGraph)).to.be.true
+    expect(Graph.hasNode('/if', rewGraph)).to.not.be.true
+    expect(Graph.nodesBy('/functional/lambda', rewGraph)).to.have.length(2)
   })
 })
