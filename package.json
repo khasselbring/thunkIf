@@ -8,7 +8,8 @@
     "build": "babel src -d lib",
     "doc": "jsdoc -c .jsdoc.json && cp -r doc jsdoc/@buggyorg/rewrite-toolchain/`node -e \"console.log(require('./package.json').version)\"`",
     "publish-docs": "npm run doc && (git diff --exit-code > /dev/null || (echo 'No clean head. Please commit or stash before pushing docs.' && exit 1))  && (git diff --cached --exit-code  > /dev/null  || (echo 'No clean head. Please commit or stash before pushing docs.' && exit 1)) && git add -f jsdoc/* && git commit -m '(doc) New documentation.' && git subtree split --prefix jsdoc/@buggyorg/graphtools/`node -e \"console.log(require('./package.json').version)\"` -b gh-pages && git push -f origin gh-pages:gh-pages && git branch -D gh-pages && git reset HEAD~1",
-    "prepublish": "babel src -d lib"
+    "prepublish": "babel src -d lib",
+    "benchmark": "node ../benchmark/benchmark.js"
   },
   "keywords": [
     "Buggy"
@@ -25,8 +26,10 @@
     "babel-preset-es2015": "^6.3.13",
     "babel-register": "^6.4.3",
     "chai": "^3.4.1",
+    "dygraphs": "^2.0.0",
     "jsdoc": "^3.4.0",
     "mocha": "^3.2.0",
+    "papaparse": "^4.2.0",
     "standard": "^9.0.0"
   }
 }

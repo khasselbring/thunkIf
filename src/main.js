@@ -29,8 +29,8 @@ export function inEpsilonRange (a, b, epsilon) {
 
 /**
  * TODO
- * @param {number[]} values 
- * @param {string} behavior 
+ * @param {number[]} values
+ * @param {string} behavior
  */
 export function hasGrowthBehavior (values, behavior, epsilon) {
   var f

@@ -21,6 +21,42 @@
       "skipFiles": [
         "node_modules/lodash/**/*"
       ]
+    },
+
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "Mocha",
+      "program": "${workspaceRoot}/node_modules/mocha/bin/_mocha",
+      "cwd": "${workspaceRoot}",
+      "args": ["--compilers", "js:babel-register"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": true,
+      "smartStep": false
+
+    },
+
+    {
+      "name": "Debug",
+      "type": "node",
+      "request": "launch",
+      "protocol": "inspector",
+      "program": "${workspaceRoot}/.vscode/debug.js",
+      "cwd": "${workspaceRoot}",
+      "args": ["fac.json", "-l", "languages/c", "-l", "languages/c-like"],
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "console": "internalConsole",
+      "sourceMaps": true,
+      "smartStep": false,
+      "skipFiles": [
+        "node_modules/lodash/**/*"
+      ]
+
     }
   ]
 }

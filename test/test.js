@@ -1,5 +1,7 @@
 import * as Graph from '@buggyorg/graphtools'
 import * as Runtime from '../src/main'
+import * as Visualize from '../src/visualize'
+import Papa from 'papaparse'
 import chai from 'chai'
 
 const expect = chai.expect
@@ -88,5 +90,20 @@ describe('» Behavior', () => {
     const values = [1, 2, 4, 5, 16, 32]
 
     expect(Runtime.hasGrowthBehavior(values, 'exponential', 10)).to.be.false
+  })
+})
+
+describe.only('» Visualization', () => {
+  it('Can Plot a grah', () => {
+    const data = {
+      x: [1, 2, 3, 4, 5],
+      y: [1, 2, 4, 8, 16]
+    }
+
+    const diagram = Visualize.plotRuntime(data)
+
+    expect(diagram).not.to.be.a('undefined')
+
+    Papa.unparse(diagram)
   })
 })
