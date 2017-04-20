@@ -1,0 +1,4 @@
+set terminal pdf
+set output outputname
+set datafile separator ","
+plot datafile with lines
