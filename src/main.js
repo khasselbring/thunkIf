@@ -1,5 +1,10 @@
 import * as Graph from '@buggyorg/graphtools'
 
+/**
+ * Creates a function that runs f n times with the initial argument
+ * @param {integer} n repetitions
+ * @param {function} f function to run
+ */
 export function times (n, f) {
   return function () {
     for (var i = 0; i < n; i++) {
@@ -8,6 +13,11 @@ export function times (n, f) {
   }
 }
 
+/**
+ * Creates a functions that runs f n times each time passing the result back into the function
+ * @param {integer} n repetitions
+ * @param {function} f function to run
+ */
 export function timesIntermediate (n, f) {
   return function (x) {
     for (var i = 0; i < n; i++) {
@@ -72,22 +82,15 @@ export function growsByFunction (values, f, epsilon) {
 
 /**
  * Runs a function and measures the time needed to do so
+ * The returned Object has the output of the function and its runtime stored
  * @param {function} f The function to run
  * @returns {milliseconds} The time used by the function
  */
 export function executionTime (f) {
+  var results = {}
   var before = new Date()
-  f()
+  results.output = f()
   var after = new Date()
-  return after - before
-}
-
-export function addNodeAmount (amount) {
-  var graph = timesIntermediate(amount, function (graph) {
-    return Graph.flow(
-      Graph.addNode({})
-    )(graph)
-  })(Graph.empty())
-
-  return graph
+  results.runtime = after - before
+  return results
 }

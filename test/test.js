@@ -1,7 +1,6 @@
 import * as Graph from '@buggyorg/graphtools'
 import * as Runtime from '../src/main'
 import * as Visualize from '../src/visualize'
-import Papa from 'papaparse'
 import chai from 'chai'
 
 const expect = chai.expect
@@ -103,7 +102,5 @@ describe.only('» Visualization', () => {
     const diagram = Visualize.plotRuntime(data)
 
     expect(diagram).not.to.be.a('undefined')
-
-    Papa.unparse(diagram)
   })
 })
