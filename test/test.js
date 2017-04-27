@@ -1,6 +1,7 @@
 import * as Graph from '@buggyorg/graphtools'
-import * as Runtime from '../src/main'
+import * as Runtime from '../src/runtime'
 import * as Visualize from '../src/visualize'
+import * as Benchmarks from '../src/benchmarks'
 import chai from 'chai'
 
 const expect = chai.expect
@@ -92,7 +93,7 @@ describe('» Behavior', () => {
   })
 })
 
-describe.only('» Visualization', () => {
+describe.skip('» Visualization', () => {
   it('Can Plot a grah', () => {
     const data = {
       x: [1, 2, 3, 4, 5],
@@ -102,5 +103,22 @@ describe.only('» Visualization', () => {
     const diagram = Visualize.plotRuntime(data)
 
     expect(diagram).not.to.be.a('undefined')
+  })
+})
+
+describe.only('» Benchmark', () => {
+  it('Can Benchmark adding nodes', () => {
+    const results = Runtime.executionTime(function () {
+      return Benchmarks.addNodes(10)
+    })
+    console.log(results.runtime)
+  })
+  
+  it('Can Benchmark adding edges', () => {
+    const graph = Benchmarks.addNodes(10)
+    const results = Runtime.executionTime(function () {
+      return Benchmarks.addEdges(10, graph)
+    })
+    console.log(results.runtime)
   })
 })

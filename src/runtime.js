@@ -1,5 +1,3 @@
-import * as Graph from '@buggyorg/graphtools'
-
 /**
  * Creates a function that runs f n times with the initial argument
  * @param {integer} n repetitions
